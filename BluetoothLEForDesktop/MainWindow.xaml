@@ -1,0 +1,37 @@
+﻿<Window
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+		xmlns:chartingtoolkit="clr-namespace:System.Windows.Controls.DataVisualization.Charting;assembly=System.Windows.Controls.DataVisualization.Toolkit"		
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="d" x:Class="BluetoothLEForDesktop.MainWindow"		
+        Title="MainWindow"
+		Loaded="Window_Loaded"
+		d:DesignHeight="402">
+	<DockPanel>
+		<ListBox DockPanel.Dock="Left" ItemsSource="{Binding Devices}">
+			<ListBox.ItemTemplate>
+				<DataTemplate>
+					<StackPanel Orientation="Horizontal">
+						<Button Content="{Binding Name}" Click="button_Click" />
+					</StackPanel>
+				</DataTemplate>
+			</ListBox.ItemTemplate>
+		</ListBox>
+		<StackPanel DockPanel.Dock="Top" Orientation="Horizontal">
+			<CheckBox Margin="5,0,10,0" IsChecked="{Binding IsServiceInitialized, Mode=OneWay}" IsEnabled="False" Content="Initialized" />
+			<TextBlock Text="{Binding BodySensorLocation}" />
+		</StackPanel>
+		<ListBox DockPanel.Dock="Bottom" Height="100" ItemsSource="{Binding DataPoints}">
+			<ListBox.ItemTemplate>
+				<DataTemplate>
+					<TextBlock Text="{Binding}" />
+				</DataTemplate>
+			</ListBox.ItemTemplate>
+		</ListBox>
+		<chartingtoolkit:Chart>
+			<chartingtoolkit:Chart.Axes>
+				<chartingtoolkit:LinearAxis Title="心拍数" ShowGridLines="True" Orientation="Y" Location="Left" Interval="20" Maximum="210" Minimum="20"/>
+			</chartingtoolkit:Chart.Axes>
+			<chartingtoolkit:LineSeries Title="心拍数" DependentValueBinding="{Binding HeartRateValue}" IndependentValueBinding="{Binding OffsetTime}" ItemsSource="{Binding DataPoints}" />
+		</chartingtoolkit:Chart>
+	</DockPanel>
+</Window>
